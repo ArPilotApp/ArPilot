@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<title>Ar Pilot V3</title>
+<style>
+:root{--sun:#FFD447;--cream:#FFFDF4;--ink:#1f1f1f;--muted:#666;--pink:#FFD6E7;--potato:#F0DEC0;--green:#B9F6CA;--cour:#C8F7B8;--blue:#D7ECFF;--red:#FFD6D6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink)}
+header{position:sticky;top:0;z-index:10;background:var(--sun);padding:8px;border-bottom:1px solid rgba(0,0,0,.15)}
+h1{margin:0 0 3px;font-size:19px}.sub{font-size:12px;font-weight:900;color:#333;margin-bottom:6px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.kpi{background:white;border-radius:12px;text-align:center;padding:7px 3px}
+.kpi span{display:block;font-size:11px;color:var(--muted);font-weight:800}.kpi b{display:block;font-size:17px}
+.tabs{position:sticky;top:101px;z-index:9;background:var(--cream);display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:8px;border-bottom:1px solid #eee}
+.tab{border:1px solid #ddd;background:white;border-radius:999px;padding:9px 1px;font-weight:900;font-size:12px}.tab.active{background:var(--ink);color:white}
+main{padding:8px 8px 100px}.panel{display:none}.panel.active{display:block}
+.card{background:white;border-radius:16px;padding:10px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.title{font-weight:1000;margin:3px 0 8px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+button{border:0;border-radius:14px;min-height:54px;padding:9px 4px;font-size:16px;font-weight:1000;color:var(--ink)}button:active{transform:scale(.97)}
+.art{background:var(--pink)}.pdt{background:var(--potato)}.fen{background:var(--green)}.cour{background:var(--cour)}.blue{background:var(--blue)}.black{background:var(--ink);color:white}.red{background:var(--red)}.grey{background:#eee}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}label{font-size:12px;font-weight:900;color:#444}
+input,select{width:100%;padding:10px;border:1px solid #ddd;border-radius:12px;font-size:16px;background:white;margin:3px 0 8px}
+.line{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:8px 0;gap:8px}.line span{overflow:hidden;text-overflow:ellipsis}.line b{white-space:nowrap}
+.big{font-size:32px;font-weight:1000;text-align:center;margin:8px}.muted{font-size:13px;color:var(--muted)}
+.bar{height:18px;border-radius:99px;background:#eee;overflow:hidden}.bar div{height:100%;background:var(--sun);width:0}
+.footer{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px;z-index:20}.footer button{min-height:48px}
+.badge{display:inline-block;background:#fff3b0;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:1000;margin:2px 2px 6px 0}
+.historyItem{border:1px solid #eee;border-radius:14px;padding:10px;margin-bottom:8px;background:#fff}
+.historyItem h3{margin:0 0 6px;font-size:16px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🧅 Ar Pilot</h1>
+  <div class="sub" id="currentMarketLabel">Aucun marché actif</div>
+  <div class="kpis">
+    <div class="kpi"><span>CA</span><b id="ca">0€</b></div>
+    <div class="kpi"><span>Bénéf.</span><b id="profit">0€</b></div>
+    <div class="kpi"><span>Clients</span><b id="clients">0</b></div>
+    <div class="kpi"><span>Panier</span><b id="avg">0€</b></div>
+  </div>
+</header>
+
+<div class="tabs">
+<button class="tab active" data-tab="vente">⚡ Vente</button>
+<button class="tab" data-tab="panier">🛒 Panier</button>
+<button class="tab" data-tab="stats">📊 Stats</button>
+<button class="tab" data-tab="settings">⚙️ Régl.</button>
+<button class="tab" data-tab="history">📚 Hist.</button>
+</div>
+
+<main>
+<section id="vente" class="panel active">
+  <div class="card">
+    <span class="badge" id="venteStatus">Marché actif</span>
+    <div class="title">🌸 Artichauts</div><div class="grid">
+      <button class="art sale" data-label="Artichaut x1" data-family="Artichauts" data-price="2.8" data-cost="0.67">1<br>2,80€</button>
+      <button class="art sale" data-label="Artichauts x2" data-family="Artichauts" data-price="5" data-cost="1.34">2<br>5€</button>
+      <button class="art sale" data-label="Artichauts x3" data-family="Artichauts" data-price="7" data-cost="2.01">3<br>7€</button>
+      <button class="art sale" data-label="Artichauts x4" data-family="Artichauts" data-price="9" data-cost="2.68">4<br>9€</button>
+      <button class="art sale" data-label="Artichauts x5" data-family="Artichauts" data-price="11" data-cost="3.35">5<br>11€</button>
+      <button class="art sale" data-label="Artichauts x6" data-family="Artichauts" data-price="12" data-cost="4.02">6<br>12€</button>
+    </div>
+  </div>
+  <div class="card"><div class="title">🥔 Pommes de terre</div><div class="grid">
+    <button class="pdt sale" data-label="PDT 1kg" data-family="PDT" data-price="3" data-cost="0.8">1kg<br>3€</button>
+    <button class="pdt sale" data-label="PDT 2kg" data-family="PDT" data-price="6" data-cost="1.6">2kg<br>6€</button>
+    <button class="pdt sale" data-label="PDT 3kg" data-family="PDT" data-price="9" data-cost="2.4">3kg<br>9€</button>
+    <button class="pdt sale" data-label="PDT 5kg" data-family="PDT" data-price="12" data-cost="4">5kg<br>12€</button>
+  </div></div>
+  <div class="card"><div class="title">🥒 Courgettes</div><div class="grid">
+    <button class="cour sale" data-label="Courgette x1" data-family="Courgettes" data-price="0.8" data-cost="0.16">1<br>0,80€</button>
+    <button class="cour sale" data-label="Courgettes x5" data-family="Courgettes" data-price="3" data-cost="0.8">5<br>3€</button>
+    <button class="cour sale" data-label="Courgettes x10" data-family="Courgettes" data-price="5" data-cost="1.6">10<br>5€</button>
+  </div><p class="muted">Vente sans kilo. Coût estimé : 5 courgettes ≈ 1 kg.</p></div>
+  <div class="card"><div class="title">🌿 Fenouil</div><div class="grid">
+    <button class="fen sale" data-label="Fenouil x1" data-family="Fenouil" data-price="2" data-cost="0.43">1<br>2€</button>
+    <button class="fen sale" data-label="Fenouil x3" data-family="Fenouil" data-price="5" data-cost="1.29">3<br>5€</button>
+  </div></div>
+</section>
+
+<section id="panier" class="panel">
+  <div class="card"><div class="title">🛒 Client en cours</div><div id="basket"></div><div class="big" id="basketTotal">0€</div>
+    <div class="row"><button class="black" id="validateBasket">✅ Valider</button><button class="red" id="undoBasket">↩️ Annuler article</button><button class="red" id="clearBasket">🗑️ Vider</button><button class="grey undoSale">⏪ Annuler vente</button></div>
+  </div>
+  <div class="card"><div class="title">➕ Ajouter au panier</div><div class="grid">
+    <button class="art basketadd" data-family="Artichauts" data-label="Art. x2" data-price="5" data-cost="1.34">🌸 2<br>5€</button>
+    <button class="art basketadd" data-family="Artichauts" data-label="Art. x3" data-price="7" data-cost="2.01">🌸 3<br>7€</button>
+    <button class="art basketadd" data-family="Artichauts" data-label="Art. x5" data-price="11" data-cost="3.35">🌸 5<br>11€</button>
+    <button class="pdt basketadd" data-family="PDT" data-label="PDT 1kg" data-price="3" data-cost="0.8">🥔 1kg<br>3€</button>
+    <button class="pdt basketadd" data-family="PDT" data-label="PDT 3kg" data-price="9" data-cost="2.4">🥔 3kg<br>9€</button>
+    <button class="pdt basketadd" data-family="PDT" data-label="PDT 5kg" data-price="12" data-cost="4">🥔 5kg<br>12€</button>
+    <button class="cour basketadd" data-family="Courgettes" data-label="Courgette x1" data-price="0.8" data-cost="0.16">🥒 1<br>0,80€</button>
+    <button class="cour basketadd" data-family="Courgettes" data-label="Courgettes x5" data-price="3" data-cost="0.8">🥒 5<br>3€</button>
+    <button class="cour basketadd" data-family="Courgettes" data-label="Courgettes x10" data-price="5" data-cost="1.6">🥒 10<br>5€</button>
+    <button class="fen basketadd" data-family="Fenouil" data-label="Fenouil x1" data-price="2" data-cost="0.43">🌿 1<br>2€</button>
+    <button class="fen basketadd" data-family="Fenouil" data-label="Fenouil x3" data-price="5" data-cost="1.29">🌿 3<br>5€</button>
+  </div></div>
+</section>
+
+<section id="stats" class="panel">
+  <div class="card"><div class="title">🎯 Objectif du jour</div><div class="line"><span>Réalisé</span><b id="dayDone">0€</b></div><div class="line"><span>Objectif</span><b id="dayGoalView">0€</b></div><div class="line"><span>Écart</span><b id="dayGap">0€</b></div></div>
+  <div class="card"><div class="title">🏆 Challenge</div><div class="line"><span>Semaine dernière</span><b id="lastWeekView">0€</b></div><div class="line"><span>Record</span><b id="recordView">0€</b></div><div class="line"><span>Reste record</span><b id="recordGap">0€</b></div></div>
+  <div class="card"><div class="title">🎯 Objectif juillet</div><div class="bar"><div id="progress"></div></div><div class="line"><span>Réalisé avec aujourd’hui</span><b id="monthDoneView">0€</b></div><div class="line"><span>Avancement</span><b id="monthPct">0%</b></div><div class="line"><span>Reste</span><b id="monthLeft">0€</b></div></div>
+  <div class="card"><div class="title">📈 Créneaux horaires</div><div id="slots" class="muted">Aucune vente.</div></div>
+</section>
+
+<section id="settings" class="panel">
+  <div class="card"><div class="title">📍 Marché actif</div>
+    <div class="row"><div><label>Marché</label><select id="market"><option>TREGASTEL</option><option selected>PLOUGASNOU</option><option>LOCQUIREC</option><option>LANNION</option><option>PERROS-GUIREC</option><option>SAINT-RENAN</option><option>PLESTIN-LES-GREVES</option></select></div><div><label>Météo</label><select id="weather"><option>☀️ Beau</option><option>⛅ Variable</option><option>🌧️ Pluie</option><option>💨 Vent</option></select></div></div>
+    <div class="row"><div><label>Barnum</label><select id="barnum"><option>⛺ Avec barnum</option><option selected>☀️ Sans barnum</option></select></div><div><label>Stand ml</label><input id="ml" type="number" step="0.5" value="6"></div></div>
+    <div class="row"><div><label>Prix place</label><input id="place" type="number" step="0.01" value="0"></div><div><label>Objectif jour</label><input id="dayGoal" type="number" value="500"></div></div>
+  </div>
+  <div class="card"><div class="title">🎯 Objectifs</div>
+    <div class="row"><div><label>Semaine dernière</label><input id="lastWeek" type="number" value="0"></div><div><label>Record marché</label><input id="record" type="number" value="0"></div></div>
+    <div class="row"><div><label>Objectif mois</label><input id="monthGoal" type="number" value="10000"></div><div><label>Déjà réalisé avant aujourd'hui</label><input id="monthDoneInput" type="number" value="0"></div></div>
+  </div>
+  <div class="card"><div class="title">✅ Fin / nouveau marché</div>
+    <button class="black" id="finishMarket">✅ Terminer le marché</button>
+    <p class="muted">Sauvegarde le marché actif dans l’historique, puis prépare le prochain marché.</p>
+    <button class="blue" id="newMarket">➕ Nouveau marché</button>
+    <p class="muted">Remet les ventes à zéro sans supprimer l’historique.</p>
+  </div>
+</section>
+
+<section id="history" class="panel">
+  <div class="card"><div class="title">📚 Historique des marchés</div><div id="historyList" class="muted">Aucun marché sauvegardé.</div></div>
+  <div class="card"><button class="red" id="clearHistory">🗑️ Effacer tout l’historique</button></div>
+</section>
+</main>
+
+<div class="footer"><button class="grey undoSale">⏪ Annuler vente</button><button class="blue" id="goBasket">🛒 Panier</button></div>
+
+<script>
+var current = JSON.parse(localStorage.getItem("arpilot_v3_current") || "null") || {id:Date.now(), startedAt:new Date().toISOString(), sales:[], basket:[]};
+var history = JSON.parse(localStorage.getItem("arpilot_v3_history") || "[]");
+function euro(n){return (Math.round((Number(n)||0)*100)/100).toLocaleString("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0});}
+function euro2(n){return (Math.round((Number(n)||0)*100)/100).toLocaleString("fr-FR",{style:"currency",currency:"EUR"});}
+function save(){current.basket = current.basket || []; localStorage.setItem("arpilot_v3_current", JSON.stringify(current)); localStorage.setItem("arpilot_v3_history", JSON.stringify(history));}
+function showPanel(id){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===id));}
+function settingsObj(){return {market:document.getElementById('market').value, weather:document.getElementById('weather').value, barnum:document.getElementById('barnum').value, ml:document.getElementById('ml').value, place:Number(document.getElementById('place').value||0), dayGoal:Number(document.getElementById('dayGoal').value||0), lastWeek:Number(document.getElementById('lastWeek').value||0), record:Number(document.getElementById('record').value||0), monthGoal:Number(document.getElementById('monthGoal').value||10000), monthDoneInput:Number(document.getElementById('monthDoneInput').value||0)};}
+function makeSale(label, family, price, cost){current.sales.push({time:new Date().toISOString(), label:label, family:family, price:Number(price), cost:Number(cost), products:1});save();render();}
+function addBasket(label, family, price, cost){current.basket.push({label:label, family:family, price:Number(price), cost:Number(cost)});save();render();}
+function validateBasket(){if(!current.basket.length)return;var price=current.basket.reduce((s,x)=>s+x.price,0);var cost=current.basket.reduce((s,x)=>s+x.cost,0);var families={};current.basket.forEach(x=>families[x.family]=true);current.sales.push({time:new Date().toISOString(),label:"Panier",family:"Panier",price:price,cost:cost,products:Object.keys(families).length,items:current.basket.slice()});current.basket=[];save();render();showPanel("vente");}
+function undoSale(){current.sales.pop();save();render();}
+function startNewMarket(){current={id:Date.now(),startedAt:new Date().toISOString(),sales:[],basket:[]};save();render();showPanel("settings");}
+function summarizeMarket(){
+ var s=settingsObj(), ca=current.sales.reduce((a,x)=>a+x.price,0), cost=current.sales.reduce((a,x)=>a+x.cost,0), profit=ca-cost-s.place, clients=current.sales.length, avg=clients?ca/clients:0;
+ return {id:current.id, savedAt:new Date().toISOString(), startedAt:current.startedAt, settings:s, ca:ca, cost:cost, profit:profit, clients:clients, avg:avg, sales:current.sales.slice()};
+}
+function finishMarket(){
+ if(!current.sales.length && !confirm("Aucune vente enregistrée. Terminer quand même ?")) return;
+ var summary=summarizeMarket();
+ history.unshift(summary);
+ localStorage.setItem("arpilot_v3_history", JSON.stringify(history));
+ alert("Marché sauvegardé : " + summary.settings.market + " — CA " + euro(summary.ca) + " — bénéfice " + euro(summary.profit));
+ startNewMarket();
+ showPanel("history");
+}
+function render(){
+ var s=settingsObj(), ca=current.sales.reduce((a,x)=>a+x.price,0), cost=current.sales.reduce((a,x)=>a+x.cost,0), profit=ca-cost-s.place, clients=current.sales.length, avg=clients?ca/clients:0;
+ document.getElementById('currentMarketLabel').textContent = s.market + " • " + s.weather + " • " + s.barnum;
+ caEl.textContent=euro(ca); profitEl.textContent=euro(profit); clientsEl.textContent=clients; avgEl.textContent=euro(avg);
+ document.getElementById('venteStatus').textContent = current.sales.length ? "Marché en cours • " + clients + " clients" : "Nouveau marché prêt";
+ var bt=current.basket.reduce((a,x)=>a+x.price,0); document.getElementById('basketTotal').textContent=euro2(bt);
+ document.getElementById('basket').innerHTML=current.basket.length?current.basket.map(x=>'<div class="line"><span>'+x.label+'</span><b>'+euro2(x.price)+'</b></div>').join(""):'<p class="muted">Aucun article.</p>';
+ document.getElementById('dayDone').textContent=euro(ca); document.getElementById('dayGoalView').textContent=euro(s.dayGoal); document.getElementById('dayGap').textContent=euro(ca-s.dayGoal);
+ document.getElementById('lastWeekView').textContent=euro(s.lastWeek); document.getElementById('recordView').textContent=euro(s.record); document.getElementById('recordGap').textContent=euro(Math.max(0,s.record-ca));
+ var md=s.monthDoneInput+profit, pct=s.monthGoal?Math.max(0,Math.min(100,md/s.monthGoal*100)):0; document.getElementById('progress').style.width=pct+"%"; document.getElementById('monthDoneView').textContent=euro(md); document.getElementById('monthPct').textContent=pct.toFixed(1)+"%"; document.getElementById('monthLeft').textContent=euro(Math.max(0,s.monthGoal-md));
+ var slots={}; current.sales.forEach(x=>{var d=new Date(x.time), k=d.getHours()+"h-"+(d.getHours()+1)+"h"; slots[k]=(slots[k]||0)+x.price;});
+ slotsEl.innerHTML=Object.keys(slots).sort().map(k=>'<div class="line"><span>'+k+'</span><b>'+euro(slots[k])+'</b></div>').join("") || "Aucune vente.";
+ renderHistory();
+}
+function renderHistory(){
+ if(!history.length){document.getElementById('historyList').innerHTML="Aucun marché sauvegardé.";return;}
+ document.getElementById('historyList').innerHTML=history.map((h,i)=>{
+   var d=new Date(h.savedAt).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"2-digit"});
+   return '<div class="historyItem"><h3>'+d+' — '+h.settings.market+'</h3><div class="line"><span>CA</span><b>'+euro(h.ca)+'</b></div><div class="line"><span>Bénéfice</span><b>'+euro(h.profit)+'</b></div><div class="line"><span>Clients</span><b>'+h.clients+'</b></div><div class="line"><span>Panier moyen</span><b>'+euro(h.avg)+'</b></div><p class="muted">'+h.settings.weather+' • '+h.settings.barnum+' • '+h.settings.ml+' ml • Place '+euro2(h.settings.place)+'</p></div>';
+ }).join("");
+}
+var caEl, profitEl, clientsEl, avgEl, slotsEl;
+document.addEventListener("DOMContentLoaded",function(){
+ caEl=document.getElementById("ca"); profitEl=document.getElementById("profit"); clientsEl=document.getElementById("clients"); avgEl=document.getElementById("avg"); slotsEl=document.getElementById("slots");
+ document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showPanel(b.dataset.tab)));
+ document.querySelectorAll(".sale").forEach(b=>b.addEventListener("click",()=>makeSale(b.dataset.label,b.dataset.family,b.dataset.price,b.dataset.cost)));
+ document.querySelectorAll(".basketadd").forEach(b=>b.addEventListener("click",()=>addBasket(b.dataset.label,b.dataset.family,b.dataset.price,b.dataset.cost)));
+ document.getElementById("validateBasket").addEventListener("click",validateBasket);
+ document.getElementById('undoBasket').addEventListener("click",function(){current.basket.pop();save();render();});
+ document.getElementById('clearBasket').addEventListener("click",function(){current.basket=[];save();render();});
+ document.querySelectorAll(".undoSale").forEach(b=>b.addEventListener("click",undoSale));
+ document.getElementById('goBasket').addEventListener("click",()=>showPanel("panier"));
+ document.getElementById('finishMarket').addEventListener("click",finishMarket);
+ document.getElementById('newMarket').addEventListener("click",function(){ if(current.sales.length && !confirm("Créer un nouveau marché ? Le marché actuel ne sera pas sauvegardé sauf si tu cliques d'abord sur Terminer le marché.")) return; startNewMarket();});
+ document.getElementById('clearHistory').addEventListener("click",function(){ if(confirm("Effacer tout l’historique ?")){history=[];save();render();}});
+ ["market","weather","barnum","ml","place","dayGoal","lastWeek","record","monthGoal","monthDoneInput"].forEach(id=>document.getElementById(id).addEventListener("input",function(){save();render();}));
+ render();
+});
+</script>
+</body>
+</html>
